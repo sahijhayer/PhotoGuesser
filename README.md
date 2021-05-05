@@ -1,2 +1,2 @@
 # PhotoGuesser
-PhotoGuesser is a web app where the user is given a picture of a random city and must guess where the picture was taken using a marker on a map.
+PhotoGuesser is a web app where the user is given a picture of a random city and must guess where the picture was taken using a marker on a map. The user can also look at their past games played and their current game does not end until they have guessed. The app was designed using HTML, CSS, Javascript, Node.js, express.js, and MongoDB. The front-end of the app was designed using HTML, CSS, and Javascript. The random images and their locations were found using Node.js and express.js. Each user's past and current games were stored on a MongoDB Atlas database using express.js.
