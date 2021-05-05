@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>PhotoGuesser</title>
+    <link href="/css/history-style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  </head>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+      <img src="css/logo.png" width="40" height="40" id="logo" class="d-inline-block align-top" alt="">
+    </a>
+    <a class="navbar-brand" href="/">PhotoGuesser</a>
+    <a class="navbar-text" href="/logout">Logout</a>
+  </nav>
+  <body>
+    <h1 style="color: white"> Past Games </h1>
+    <% games.forEach(game => { %>
+      <img id="city" src=<%= game.image %> alt="City Image">
+      <p> You were <%= game.distance %> km away from this location. </p>
+    <% }); %>
+  </body>
+</html>

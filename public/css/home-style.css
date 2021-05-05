@@ -1,0 +1,101 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: linear-gradient(43deg, #f90000, #ce4b44);
+  background-size: 400% 400%;
+  -webkit-animation: Background 22s ease infinite;
+  -moz-animation: Background 22s ease infinite;
+  animation: Background 22s ease infinite;
+  font-family: Georgia, serif;
+  width: 100%;
+  font-size: 25px;
+  line-height: 0.8;
+  letter-spacing: 3px;
+  font-weight: 300;
+}
+
+@-webkit-keyframes Background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@-moz-keyframes Background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@keyframes Background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+
+.home_card {
+  width: 500px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: linear-gradient(43deg, #4d1e13, #94231c);
+  background-size: 400% 400%;
+  -webkit-animation: Card 30s ease infinite;
+  -moz-animation: Card 30s ease infinite;
+  animation: Card 30s ease infinite;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+
+}
+@-webkit-keyframes Card {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@-moz-keyframes Card {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@keyframes Card {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+.form_container {
+  margin-top: 20px;
+}
+
+#form-title{
+  color: #fff;
+
+}
+
+.home_btn {
+  width: 100%;
+  background: #f14336  !important;
+  color: white !important;
+  margin-bottom: 20px;
+}
+.home_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.home_container {
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#logo {
+  height: 250px;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}

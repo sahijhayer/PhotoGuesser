@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>PhotoGuesser</title>
+    <link href="/css/play-style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script>
+      const degreesToRadians = (degrees) => {
+        return degrees * Math.PI / 180;
+      }
+
+      const distanceInKmBetweenEarthCoordinates = (lat1, lon1, lat2, lon2) => {
+        var earthRadiusKm = 6371;
+
+        var dLat = degreesToRadians(lat2-lat1);
+        var dLon = degreesToRadians(lon2-lon1);
+
+        lat1 = degreesToRadians(lat1);
+        lat2 = degreesToRadians(lat2);
+
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return earthRadiusKm * c;
+      }
+
+
+      let map;
+      let marker = null;
+      let latitude;
+      let longitude;
+      let guess = false;
+
+      function CenterControl(controlDiv, map) {
+
+        const controlUI = document.createElement("div");
+        controlUI.style.backgroundColor = "#fff";
+        controlUI.style.border = "2px solid #fff";
+        controlUI.style.borderRadius = "3px";
+        controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+        controlUI.style.cursor = "pointer";
+        controlUI.style.marginTop = "8px";
+        controlUI.style.marginBottom = "22px";
+        controlUI.style.textAlign = "center";
+        controlUI.title = "Click to make your guess.";
+        controlDiv.appendChild(controlUI);
+
+        const controlText = document.createElement("div");
+        controlText.style.color = "rgb(25,25,25)";
+        controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+        controlText.style.fontSize = "16px";
+        controlText.style.lineHeight = "38px";
+        controlText.style.paddingLeft = "5px";
+        controlText.style.paddingRight = "5px";
+        controlText.innerHTML = "Make Guess";
+        controlUI.appendChild(controlText);
+
+        controlUI.addEventListener("click", () => {
+          const distance = Math.round(distanceInKmBetweenEarthCoordinates(<%= latitude %>, <%= longitude %>, latitude, longitude) * 100) / 100;
+          document.getElementById("distance").innerHTML = "You are " + distance + " km away from the location.";
+          guess = true;
+          let answer = new google.maps.Marker({
+            position: {lat: <%= latitude %>, lng: <%= longitude %>},
+            map: map,
+          });
+          var line = new google.maps.Polyline({
+            path: [
+              new google.maps.LatLng(latitude, longitude),
+              new google.maps.LatLng(<%= latitude %>, <%= longitude %>)
+            ],
+            strokeColor: "#FF0000",
+            strokeOpacity: 1.0,
+            strokeWeight: 4,
+            map: map
+          });
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", '/guess', true);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(JSON.stringify({
+              lat: latitude,
+              lng: longitude
+          }));
+        });
+      }
+
+
+      function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 2,
+          center: {lat: 0, lng: 0},
+          disableDefaultUI: true,
+        });
+        function placeMarker(location) {
+          if (guess === false) {
+            if (marker != null) {
+              marker.setMap(null);
+            }
+            latitude = location.lat();
+            longitude = location.lng();
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+          }
+        }
+        google.maps.event.addListener(map, 'click', function(event) {
+           placeMarker(event.latLng);
+        });
+        map.setOptions({draggableCursor:'crosshair'});
+        const centerControlDiv = document.createElement("div");
+        CenterControl(centerControlDiv, map);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+      }
+
+    </script>
+  </head>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+      <img src="css/logo.png" width="40" height="40" id="logo" class="d-inline-block align-top" alt="">
+    </a>
+    <a class="navbar-brand" href="/">PhotoGuesser</a>
+    <a class="navbar-text" href="/logout">Logout</a>
+  </nav>
+  <body>
+    <img id="city" src=<%= image %> alt="City Image">
+
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <div id="distance"></div>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src=<%= api_url %>
+      async
+    ></script>
+  </body>
+</html>
